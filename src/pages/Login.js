@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ToastAndroid  } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
@@ -10,21 +10,24 @@ export default function Component() {
       .then((resultObject) => {
         const { success } = resultObject
         if (success) {
-          console.log('successful biometrics provided')
+          console.log('successful biometrics provided');
+          ToastAndroid.show("Authenticated!", ToastAndroid.SHORT);
         } else {
-          console.log('user cancelled biometric prompt')
+          console.log('user cancelled biometric prompt');
+          ToastAndroid.show("Authentication failed", ToastAndroid.SHORT);
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       })
   }
 
   const getKeys = () => {
-    ReactNativeBiometrics.createKeys('Confirm fingerprint')
+    ReactNativeBiometrics.createKeys()
       .then((resultObject) => {
         const { publicKey } = resultObject
-        console.log(publicKey)
+        console.log(publicKey);
+        Alert.alert('Keys generated', publicKey)
       })
   }
 
@@ -34,9 +37,11 @@ export default function Component() {
         const { keysDeleted } = resultObject
 
         if (keysDeleted) {
-          console.log('Successful deletion')
+          console.log('Successful deletion');
+          ToastAndroid.show("Keys deleted", ToastAndroid.SHORT);
         } else {
-          console.log('Unsuccessful deletion because there were no keys to delete')
+          console.log('Unsuccessful deletion because there were no keys to delete');
+          ToastAndroid.show('No keys to delete', ToastAndroid.SHORT)
         }
       })
   }
@@ -46,8 +51,6 @@ export default function Component() {
     <View style={styles.container}>
 
       <Text style={styles.textTop}>Authenticate</Text>
-
-
       <TouchableOpacity style={styles.logo} onPress={auth}>
         <Icon name="finger-print" color="white" size={128} />
       </TouchableOpacity>
@@ -61,6 +64,7 @@ export default function Component() {
       <TouchableOpacity style={styles.logo} onPress={deleteKeys}>
         <Icon name="close-circle-sharp" color="white" size={128} />
       </TouchableOpacity>
+      
     </View>
 
 
