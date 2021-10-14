@@ -55,14 +55,8 @@ export default function Component() {
         <Icon name="finger-print" color="white" size={128} />
       </TouchableOpacity>
 
-      <Text style={styles.text}>Print keys</Text>
-      <TouchableOpacity style={styles.logo} onPress={getKeys}>
-        <Icon name="key-sharp" color="white" size={128} />
-      </TouchableOpacity>
-
-      <Text style={styles.text}>Delete keys</Text>
-      <TouchableOpacity style={styles.logo} onPress={deleteKeys}>
-        <Icon name="close-circle-sharp" color="white" size={128} />
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+          <Text>Se cadastrar</Text>
       </TouchableOpacity>
       
     </View>
